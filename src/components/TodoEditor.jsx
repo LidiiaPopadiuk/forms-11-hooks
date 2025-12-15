@@ -26,7 +26,7 @@ export const TodoEditor = () => {
             return; 
         }
 
-        setTextValue(textValue = thisInputValue)
+        setTextValue(thisInputValue)
         // this.setState({
         //     textValue: thisInputValue
         // })
