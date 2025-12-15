@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import initialTodos from "./todo.json";
 import { TodoList } from "./components/TodoList";
 import { TodoEditor } from "./components/TodoEditor";
@@ -10,65 +10,67 @@ import styled from "styled-components";
 import "./App.css";
 
 const StyleMaindiv = styled.div`
-display: flex;
-align-items: center;
-flex-direction: column;
-`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
 
-class App extends Component {
-  state = {
-    todos: initialTodos,
-    filter: "",
-  };
+const App = () => {
 
-  onTarget = (id) => {
-    const newData = this.state.todos.map((dt) => {
+  const [todos, setTodos] = useState(initialTodos)
+  const [filter, setFilter] = useState("")
+
+  const onTarget = (id) => {
+    const newData = todos.map((dt) => {
       if (dt.id === id) {
         return { ...dt, completed: !dt.completed };
       }
       return dt;
     });
-    this.setState({ todos: newData });
+    setTodos(newData);
   };
 
-  createNewtodo = (value) => {
+  const createNewtodo = (value) => {
     const newTodo = {
       id: nanoid(),
       text: value,
       completed: false,
     };
-    this.setState((prevState) => ({
-      todos: [...prevState.todos, newTodo],
-    }));
+    setTodos([...todos, newTodo])
+    // this.setState((prevState) => ({
+    //   todos: [...prevState.todos, newTodo],
+    // }));
   };
 
-  deleteData = (id) => {
-    this.setState((prevState) => ({
-      todos: prevState.todos.filter((todo) => todo.id !== id),
-    }));
+  const deleteData = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+    // this.setState((prevState) => ({
+    //   todos: prevState.todos.filter((todo) => todo.id !== id),
+    // }));
   };
 
-  FilterData = (data) => {
-    this.setState({
-      filter: data,
-    });
+  const filterData = (data) => {
+    setFilter(data)
+    //! dont do it setFilter(filter = data)
+    // this.setState({
+    //   filter: data,
+    // });
   };
 
-  render() {
-    return (
-      <StyleMaindiv className="App">
-        <GlobalStyle />
-        <Info infoData={this.state}/>
-        <TodoEditor addTodo={this.createNewtodo} />
-        <Filter filterInfo={this.FilterData}/>
-        <TodoList
-          onTarget={this.onTarget}
-          initialData={this.state}
-          deleteData={this.deleteData}
-        />
-      </StyleMaindiv>
-    );
-  }
-}
+  return (
+    <StyleMaindiv className="App">
+      <GlobalStyle />
+      <Info infoData={todos} />
+      <TodoEditor addTodo={createNewtodo} />
+      <Filter filterInfo={filterData} />
+      <TodoList
+        onTarget={onTarget}
+        initialData={todos}
+        initialFilter={filter}
+        deleteData={deleteData}
+      />
+    </StyleMaindiv>
+  );
+};
 
 export default App;

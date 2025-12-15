@@ -1,4 +1,4 @@
-import { Component } from "react";
+// import { Component } from "react";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`
@@ -7,20 +7,18 @@ border: 1px solid #25fa25ad;
 margin-top: 10px;
 `
 
-export class Filter extends Component {
+export const Filter = ({filterInfo}) => {
 
-    filterData = () => {
+    const filterData = () => {
         const inputData = document.querySelector('#inputFind')
         const inputDataValue = inputData.value
 
-        this.props.filterInfo(inputDataValue)
+        filterInfo(inputDataValue)
     }
-    render() {
-        return (
-            <StyledDiv>
-                <h2>Фільтр по імені:</h2>
-                <input onInput={this.filterData} id="inputFind" placeholder="Шукайте тут" />
-            </StyledDiv>
-        )
-    }
+    return (
+        <StyledDiv>
+            <h2>Фільтр по імені:</h2>
+            <input onInput={filterData} id="inputFind" placeholder="Шукайте тут" />
+        </StyledDiv>
+    )
 }

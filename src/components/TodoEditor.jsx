@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
@@ -10,13 +10,14 @@ display: flex;
 justify-content: space-between;
 `
 
-export class TodoEditor extends Component {
+export const TodoEditor = () => {
 
-    state = {
-        textValue: '',
-    }
+    const [textValue, setTextValue] = useState('')
+    // state = {
+    //     textValue: '',
+    // }
 
-    createTodo = () => {
+    const createTodo = ({addTodo}) => {
         const thisInput = document.querySelector('#input')
         const thisInputValue = thisInput.value
 
@@ -25,19 +26,19 @@ export class TodoEditor extends Component {
             return; 
         }
 
-        this.setState({
-            textValue: thisInputValue
-        })
-        this.props.addTodo(thisInputValue)
+        setTextValue(textValue = thisInputValue)
+        // this.setState({
+        //     textValue: thisInputValue
+        // })
+        addTodo(thisInputValue)
         thisInput.value = ""
     }
 
-    render() {
+ 
         return (
             <StyledForm>
                 <input id="input" type="text" placeholder="Нове завдання..." />
-                <button type="button" id="btn" onClick={this.createTodo}>Create</button>
+                <button type="button" id="btn" onClick={createTodo}>Create</button>
             </StyledForm>
         )
-    }
 }
