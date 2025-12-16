@@ -10,14 +10,14 @@ display: flex;
 justify-content: space-between;
 `
 
-export const TodoEditor = () => {
+export const TodoEditor = ({addTodo}) => {
 
     const [textValue, setTextValue] = useState('')
     // state = {
     //     textValue: '',
     // }
 
-    const createTodo = ({addTodo}) => {
+    const createTodo = () => {
         const thisInput = document.querySelector('#input')
         const thisInputValue = thisInput.value
 
